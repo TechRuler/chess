@@ -13,6 +13,10 @@ class Logic:
             showinfo('Game Over','Contratulations! Player 2 win this game')
         elif piece['text'] in self.chessboard.black_pieces:
             showinfo('Game Over','Contratulations! Player 1 win this game')
+        self.player_1_name = 'Player 1'
+        self.player_2_name = 'Player 2'
+        self.player1.config(text=self.player_1_name)
+        self.player2.config(text=self.player_2_name)
         self.chessboard.variables()
         self.chessboard.setup_ui()
     def movement(self, pos, old_pos):
@@ -30,8 +34,11 @@ class Logic:
             self.win(new_box)
 
         #movement
-        new_box['text'] = old_box['text']
-        old_box['text'] = ''
+        try:
+            new_box['text'] = old_box['text']
+            old_box['text'] = ''
+        except Exception as e:
+            print(f'Error:{e}')
         
         
         self.chessboard.pieces_dict[pos] = self.chessboard.pieces_dict.pop(old_pos)
