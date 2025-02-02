@@ -63,11 +63,11 @@ class Logic:
         # Validate turn and handle the piece
         if (is_white_turn and piece in self.chessboard.white_pieces) or \
            (not is_white_turn and piece in self.chessboard.black_pieces):
-            self.handle_piece(piece, 'white' if is_white_turn else 'black')
+            self.handle_piece(piece)
         else:
             print("Invalid or not your turn!")
 
-    def handle_piece(self, piece, group):
+    def handle_piece(self, piece):
         piece_guide = {
             '♙': self.pawn_guide, '♟': self.pawn_guide,
             '♖': self.rook_guide, '♜': self.rook_guide,
@@ -77,7 +77,7 @@ class Logic:
             '♔': self.king_guide, '♚': self.king_guide,
         }
         if piece in piece_guide:
-            piece_guide[piece](group)
+            piece_guide[piece]()
 
     def is_same_group(self, pos):
         box = self.chessboard.map.get(pos)
@@ -104,7 +104,7 @@ class Logic:
                 
         return False 
 
-    def pawn_guide(self, group):
+    def pawn_guide(self):
         pos = self.chessboard.get_key(self.chessboard.selected_box, self.chessboard.map)
         col, row = pos[0], int(pos[1])
         direction = 1 if self.chessboard.selected_box.cget('text') in self.chessboard.white_pieces else -1
@@ -133,20 +133,20 @@ class Logic:
         except Exception as e:
             pass
 
-    def rook_guide(self, group):
+    def rook_guide(self):
         self._guide_straight_lines()
 
-    def knight_guide(self, group):
+    def knight_guide(self):
         self._guide_knight_moves()
 
-    def bishop_guide(self, group):
+    def bishop_guide(self):
         self._guide_diagonal_lines()
 
-    def queen_guide(self, group):
+    def queen_guide(self):
         self._guide_straight_lines()
         self._guide_diagonal_lines()
 
-    def king_guide(self, group):
+    def king_guide(self):
         pos = self.chessboard.get_key(self.chessboard.selected_box, self.chessboard.map)
         directions = [
             (-1, -1), (-1, 0), (-1, 1),
